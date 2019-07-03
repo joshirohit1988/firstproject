@@ -1,5 +1,4 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
 import { Subject } from "rxjs";
 import { exhaustMap, takeUntil } from 'rxjs/operators';
 import axios from "axios";
@@ -10,7 +9,6 @@ const userSearchUrl = "https://swapi.co/api/people/?search=";
  */
 export class Login extends React.Component {
   state = {
-    redirectToSearch: false,
     username: "",
     password: "",
     showError: false,
@@ -18,16 +16,15 @@ export class Login extends React.Component {
   };
   loginSubmit$ = new Subject(); // fires events on each search input
   errorMsg = "";
-  unsubscribe$ = new Subject();
+  unsubscribe$ = new Subject(); // fires to unsubscribe the subscription on destruction of component
 
   validate = (userData) => {
     if (userData && userData.birth_year === this.state.password) {
-      this.props.doLogin(this.state.username);
       return true;
     } 
     this.setErrorMsg('Invalid Password');
-    return false
-  };
+    return false;
+  }
 
   setErrorMsg = (msg) => {
     this.errorMsg = msg;
@@ -51,7 +48,8 @@ export class Login extends React.Component {
           this.setErrorMsg('Username not found');
         }
       }
-      this.setState({ loading: false, redirectToSearch: isValidCredential });
+      isValidCredential ? this.props.doLogin(this.state.username) :
+      this.setState({ loading: false});
     },()=> this.setState({ loading: false }));
   }
   componentWillUnmount(){
@@ -59,17 +57,6 @@ export class Login extends React.Component {
   }
 
   render() {
-    let { redirectToSearch } = this.state;
-
-    if (redirectToSearch)
-      return (
-        <Redirect
-          to={{
-            pathname: "/search",
-            state: { from: this.props.location }
-          }}
-        />
-      );
     return (
       <div className="align-center">
         <h1>Star Wars Login Screen</h1>

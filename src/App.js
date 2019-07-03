@@ -15,15 +15,15 @@ export class App extends React.Component {
   state = { isLoggedIn: false, loginName: "" };
   initiateLogin = name => {
     this.setState({ isLoggedIn: true, loginName: name });
-    localStorage.setItem(userStateKey, (this.state));
+    localStorage.setItem(userStateKey, JSON.stringify(this.state));
   };
   initiatelogout = () => {
     this.setState({ isLoggedIn: false });
+    localStorage.clear();
   };
 
   componentDidMount() {
     const userState = localStorage.getItem(userStateKey);
-    console.log(userState);
     if (userState) {
       let userData;
       try {
@@ -33,6 +33,7 @@ export class App extends React.Component {
        console.log('cannot parse local storage');
       }
       if (userData) {
+        console.log('Mounted state from local storage', userData);
         this.setState(userData);
       }
     }
@@ -45,16 +46,26 @@ export class App extends React.Component {
           <Switch>
             <Route
               path="/login"
-              render={() => <Login doLogin={this.initiateLogin} />}
+              render={() => this.state.isLoggedIn ? (
+                <Redirect
+                    to={{
+                      pathname: "/search",
+                      state: { from: this.props.location }
+                    }}
+                  />
+              ) :
+              <Login doLogin={this.initiateLogin}/>}
             />
             <Route
               path="/"
               exact
               render={() =>
                 this.state.isLoggedIn ? (
-                  <SearchScreen
-                    userName={this.state.loginName}
-                    logout={this.initiatelogout}
+                  <Redirect
+                    to={{
+                      pathname: "/search",
+                      state: { from: this.props.location }
+                    }}
                   />
                 ) : (
                   <Redirect
