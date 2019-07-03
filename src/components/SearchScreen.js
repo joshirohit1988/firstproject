@@ -38,7 +38,7 @@ export class SearchScreen extends React.Component {
         this.searchCount = 0; // reset search count every 60 seconds
       }
     }, 1000);
-    // used Rxjs operator for better serach experience
+    // used Rxjs operator for better search experience
     this.searchSubject$.pipe(
       tap((value) => this.onInputChange(value)),
       filter(() => this.props.userName === "Luke Skywalker".trim() || this.searchCount <= 5),

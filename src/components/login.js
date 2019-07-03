@@ -35,7 +35,6 @@ export class Login extends React.Component {
   }
 
   componentDidMount() {
-    console.log('did mount');
     this.loginSubmit$.pipe(
       takeUntil(this.unsubscribe$),
       exhaustMap(() => axios.get(`${userSearchUrl}${this.state.username}`))
