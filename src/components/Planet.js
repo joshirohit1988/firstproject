@@ -14,7 +14,7 @@ export function Planet(props) {
     large: 'planet-large', // population > 100000000 => large Font-size: 26px
   }
   return (
-    <div >
+    <div className='color-black'>
       <p className={size[getPlanetSize(props.population)]}>Planet Name: {props.name}</p>
       <p className="planet-info">
         <span> Population: {props.population} ; </span>

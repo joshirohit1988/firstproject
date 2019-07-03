@@ -5,6 +5,7 @@ import { Subject } from "rxjs";
 import { debounceTime, distinctUntilChanged, switchMap, tap, filter } from 'rxjs/operators';
 import { PlanetDetails } from "./PlanetDetails";
 import { Spinner } from './Spinner';
+import Background from '../assets/star-wars-planet.jpg';
 
 const planetSearchUrl = "https://swapi.co/api/planets/?search=";
 
@@ -21,7 +22,7 @@ export class SearchScreen extends React.Component {
       return;
     }
     this.planetDetail = null;
-    this.setState({ loading: true, planetName: value });
+    value ? this.setState({ loading: true, planetName: value }): this.setState({ planetName: value })
   };
 
   setPlanetDetail = (planet) => {
@@ -44,6 +45,7 @@ export class SearchScreen extends React.Component {
       filter(() => this.props.userName === "Luke Skywalker".trim() || this.searchCount <= 5),
       debounceTime(400),
       distinctUntilChanged(),
+      filter((val)=> val && val.trim()),
       switchMap(value => axios.get(`${planetSearchUrl}${value}`))
     ).subscribe((resp) => {
       this.searchCount++; // search count is only increased if search is successful
@@ -56,9 +58,15 @@ export class SearchScreen extends React.Component {
   }
   render() {
     return (
-      <div>
-        <div>
+        <div className="color-black">
+        {/* <div className="search-screen" style={{
+        backgroundImage: 'url(' + Background + ')',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat'
+      }}> */}
+        <div style={{float: 'right'}}>
         <span>Welcome {this.props.userName}</span>
+        <br/>
         <button onClick={this.props.logout}>Logout</button>
         </div>
         <div className="align-center">

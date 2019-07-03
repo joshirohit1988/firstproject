@@ -3,6 +3,7 @@ import { Subject } from "rxjs";
 import { exhaustMap, takeUntil } from 'rxjs/operators';
 import axios from "axios";
 import { Spinner } from './Spinner';
+import Background from '../assets/Star-wars.jpg';
 
 const userSearchUrl = "https://swapi.co/api/people/?search=";
 /** this component has login logic
@@ -58,7 +59,11 @@ export class Login extends React.Component {
 
   render() {
     return (
-      <div className="align-center">
+      <div className="login-screen" style={{
+        backgroundImage: 'url(' + Background + ')',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+      }}>
         <h1>Star Wars Login Screen</h1>
         <h3>Please Sign To Navigate To Search Screen</h3>
 

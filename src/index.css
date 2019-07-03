@@ -1,6 +1,6 @@
 
 
-body {
+html body {
   margin: 0;
   padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -8,8 +8,13 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: #fff;
+  height: 100vh;
 }
 
+body > #root > div {
+  height: 100vh;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
@@ -52,16 +57,28 @@ code {
 }
 
 .planet-names{
-  width: 50%;
+  /* width: 50%; */
   box-sizing: border-box;
  }
 
 .details-width{
-  width: 50%;
+  /* width: 50%; */
   box-sizing: border-box;
+  /* display: flex; */
+  flex: 1; 
 }
+
+/* .details-width > div{
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+} */
+
+
 .flex-class{
   display: flex;
+  flex: 1;
+  align-items: stretch;
 }
 
 /***8*****/
@@ -111,4 +128,19 @@ h1, p {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
   }
+}
+
+.login-screen {
+  height: 100%;
+  width: 100%;
+  text-align: center;
+}
+
+.search-screen{
+  height: 100%;
+  width: 100%;
+}
+
+.color-black{
+  color: black;
 }
